@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+  mongodb1:
+    image: mongo
+    container_name: mongodb1
+    command: mongod --port 27017 --replSet rs0 --oplogSize 200
+    volumes:
+      - ./data/1:/data/db
+      - ./scripts:/scripts
+    ports:
+      - 27117:27017
+
+  mongodb2:
+    image: mongo
+    container_name: mongodb2
+    command: mongod --port 27017 --replSet rs0 --oplogSize 200
+    volumes:
+      - ./data/2:/data/db
+      - ./scripts:/scripts
+    ports:
+      - 27118:27017
+
+  mongodb3:
+    image: mongo
+    container_name: mongodb3
+    command: mongod --port 27017 --replSet rs0 --oplogSize 200
+    volumes:
+      - ./data/3:/data/db
+      - ./scripts:/scripts
+    ports:
+      - 27119:27017
+
+#  mongors:
+#    image: mongo
+#    container_name: mongodbrs
+#    networks:
+#      - alphanetwork
+#    depends_on:
+#      - mongodb1
+#      - mongodb2
+#      - mongodb3
+#    volumes:
+#      - ./deployment_scripts:/deployment_scripts
+#    entrypoint:
+#      - /deployment_scripts/initiate_replica.sh
+#
+#networks:
+#  alphanetwork:
+
+volumes:
+  data:
